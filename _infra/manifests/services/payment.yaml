@@ -22,7 +22,7 @@ spec:
       value: user-$CLUSTER_NAME
     - name: AMQP_HOST
       value: rabbitmq-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-payment:$TAG
+    image: mehreentahir/rs-payment:latest
     name: payment-$CLUSTER_NAME
     ports:
     - containerPort: 8080

@@ -18,7 +18,7 @@ spec:
       value: clusterName:$CLUSTER_NAME;service:catalogue
     - name: MONGO_HOST
       value: mongodb-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-catalogue:$TAG
+    image: mehreentahir/rs-catalogue:latest
     name: catalogue-$CLUSTER_NAME
     ports:
     - containerPort: 8080

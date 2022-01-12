@@ -20,7 +20,7 @@ spec:
       value: mongodb-$CLUSTER_NAME
     - name: REDIS_HOST
       value: redis-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-user:$TAG
+    image: mehreentahir/rs-user:latest
     name: user-$CLUSTER_NAME
     ports:
     - containerPort: 8080

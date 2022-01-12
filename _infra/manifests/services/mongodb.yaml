@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: mongodb-$CLUSTER_NAME
-        image: $DOCKERHUB_USER/rs-mongodb:$TAG
+        image: mehreentahir/rs-mongodb:latest
         resources: {}
 ---
 apiVersion: v1

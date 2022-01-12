@@ -20,7 +20,7 @@ spec:
       value: redis-$CLUSTER_NAME
     - name: CATALOGUE_HOST
       value: catalogue-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-cart:$TAG
+    image: mehreentahir/rs-cart:latest
     name: cart-$CLUSTER_NAME
     ports:
     - containerPort: 8080

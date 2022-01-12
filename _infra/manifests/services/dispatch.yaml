@@ -14,7 +14,7 @@ spec:
       value: $NEW_RELIC_LICENSE_KEY
     - name: AMQP_HOST
       value: rabbitmq-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-dispatch:$TAG
+    image: mehreentahir/rs-dispatch:latest
     name: dispatch-$CLUSTER_NAME
     ports:
     - containerPort: 8080

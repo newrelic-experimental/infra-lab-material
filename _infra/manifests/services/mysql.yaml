@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: mysql-$CLUSTER_NAME
-        image: $DOCKERHUB_USER/rs-mysql:$TAG
+        image: mehreentahir/rs-mysql:latest
         resources: {}
 ---
 apiVersion: v1

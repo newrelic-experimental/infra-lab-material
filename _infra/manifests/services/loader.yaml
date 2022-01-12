@@ -13,7 +13,7 @@ spec:
       value: $PUBLIC_URL
     - name: CLIENTS
       value: "$CLIENTS"
-    image: $DOCKERHUB_USER/rs-loader:$TAG
+    image: mehreentahir/rs-loader:latest
     name: loader-$CLUSTER_NAME
     resources: {}
   restartPolicy: OnFailure

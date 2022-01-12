@@ -20,7 +20,7 @@ spec:
       value: catalogue-$CLUSTER_NAME
     - name: MYSQL_HOST
       value: mysql-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-ratings:$TAG
+    image: mehreentahir/rs-ratings:latest
     name: ratings-$CLUSTER_NAME
     ports:
     - containerPort: 8080

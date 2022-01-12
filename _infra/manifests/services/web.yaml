@@ -24,7 +24,7 @@ spec:
       value: payment-$CLUSTER_NAME
     - name: RATINGS_HOST
       value: ratings-$CLUSTER_NAME
-    image: $DOCKERHUB_USER/rs-web:$TAG
+    image: mehreentahir/rs-web:latest
     name: web-$CLUSTER_NAME
     ports:
     - containerPort: 8080

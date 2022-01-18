@@ -1,5 +1,19 @@
 
 services:
+  agent:
+    container_name: newrelic-infra
+    build:
+      context: .
+      dockerfile: newrelic-infra.dockerfile
+    cap_add:
+      - SYS_PTRACE
+    network_mode: host
+    pid: host
+    privileged: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped
   mongodb:
     build:
       context: mongo
@@ -116,26 +130,6 @@ services:
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:shipping
-  ratings:
-    build:
-      context: ratings
-    image: $DOCKERHUB_USER/rs-ratings:$TAG
-    networks:
-      - geek-shop
-    depends_on:
-      - mysql
-      - catalogue
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    environment:
-      - MYSQL_HOST=mysql
-      - CATALOGUE_HOST=catalogue
-      - NEW_RELIC_APP_NAME=geek-shop-ratings-service
-      - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
-      - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
-      - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:ratings
   payment:
     build:
       context: payment
@@ -158,22 +152,6 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-  dispatch:
-    build:
-      context: dispatch
-    image: $DOCKERHUB_USER/rs-dispatch:$TAG
-    depends_on:
-      - rabbitmq
-    networks:
-      - geek-shop
-    environment:
-      - AMQP_HOST=rabbitmq
-      - NEW_RELIC_APP_NAME=geek-shop-dispatch-service
-      - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
   web:
     build:
       context: web
@@ -183,7 +161,6 @@ services:
       - cart
       - user
       - shipping
-      - ratings
       - payment
     ports:
       - "8888:8080"
@@ -198,7 +175,6 @@ services:
       - CART_HOST=cart
       - USER_HOST=user
       - SHIPPING_HOST=shipping
-      - RATINGS_HOST=ratings
       - PAYMENT_HOST=payment
   loader:
     build:

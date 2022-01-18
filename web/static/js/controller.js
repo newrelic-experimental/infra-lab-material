@@ -161,8 +161,6 @@
         $scope.data = {};
         $scope.data.message = ' ';
         $scope.data.product = {};
-        $scope.data.rating = {};
-        $scope.data.rating.avg_rating = 0;
         $scope.data.quantity = 1;
 
         $scope.addToCart = function() {
@@ -177,19 +175,6 @@
             }).catch((e) => {
                 $scope.data.message = 'ERROR ' + e;
                 $timeout(clearMessage, 3000);
-            });
-        };
-
-        $scope.rateProduct = function(score) {
-            var url = '/api/ratings/api/rate/' + $scope.data.product.sku + '/' + score;
-            $http({
-                url: url,
-                method: 'PUT'
-            }).then((res) => {
-                $scope.data.message = 'Thankyou for your feedback';
-                $timeout(clearMessage, 3000);
-                loadRating($scope.data.product.sku);
-            }).catch(() => {
             });
         };
         
@@ -211,22 +196,11 @@
             });
         }
 
-        function loadRating(sku) {
-            $http({
-                url: '/api/ratings/api/fetch/' + sku,
-                method: 'GET'
-            }).then((res) => {
-                $scope.data.rating = res.data;
-            }).catch(() => {
-            });
-        }
-
         function clearMessage() {
             $scope.data.message = ' ';
         }
         
         loadProduct($routeParams.sku);
-        loadRating($routeParams.sku);
     });
 
     robotshop.controller('cartform', function($scope, $http, $location, currentUser) {

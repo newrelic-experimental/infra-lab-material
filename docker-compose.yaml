@@ -1,5 +1,19 @@
 
 services:
+  agent:
+    container_name: newrelic-infra
+    build:
+      context: .
+      dockerfile: newrelic-infra.dockerfile
+    cap_add:
+      - SYS_PTRACE
+    network_mode: host
+    pid: host
+    privileged: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped
   mongodb:
     build:
       context: mongo
@@ -52,7 +66,7 @@ services:
         condition: on-failure
     environment:
       - MONGO_HOST=mongodb
-      - NEW_RELIC_APP_NAME=catalogue-service
+      - NEW_RELIC_APP_NAME=geek-shop-catalogue-service
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:catalogue
@@ -72,7 +86,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - CATALOGUE_HOST=catalogue
-      - NEW_RELIC_APP_NAME=cart-service
+      - NEW_RELIC_APP_NAME=geek-shop-cart-service
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:cart
@@ -92,7 +106,7 @@ services:
     environment:
       - MONGO_HOST=mongodb
       - REDIS_HOST=redis
-      - NEW_RELIC_APP_NAME=user-service
+      - NEW_RELIC_APP_NAME=geek-shop-user-service
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:user
@@ -112,7 +126,7 @@ services:
     environment:
       - MYSQL_HOST=mysql
       - CART_HOST=cart
-      - NEW_RELIC_APP_NAME=shipping-service
+      - NEW_RELIC_APP_NAME=geek-shop-shipping-service
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:shipping
@@ -130,7 +144,7 @@ services:
       - AMQP_HOST=rabbitmq
       - CART_HOST=cart
       - USER_HOST=user
-      - NEW_RELIC_APP_NAME=payment-service
+      - NEW_RELIC_APP_NAME=geek-shop-payment-service
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
       - NEW_RELIC_LABELS=clusterName:$CLUSTER_NAME;service:payment

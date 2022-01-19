@@ -5,4 +5,4 @@ then
   CLIENTS=1
 fi
 
-locust -f loader.py --host "$HOST" --headless -u 1 -r 0.0000000000000001
+locust -f loader.py --host "$HOST" --headless -u 10 -r 0.01

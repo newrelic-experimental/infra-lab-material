@@ -162,6 +162,16 @@ services:
       - USER_HOST=user
       - SHIPPING_HOST=shipping
       - PAYMENT_HOST=payment
+  tracking:
+    build: 
+      context: tracking
+    ports:
+      - "4000:4000"
+    environment:
+      - NEW_RELIC_APP_NAME=tracking
+      - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
+      - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
+      - NEW_RELIC_LABELS=service:tracking
   loader:
     build:
       context: loader

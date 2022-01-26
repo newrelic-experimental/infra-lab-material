@@ -6,11 +6,13 @@ import math
 app = Flask(__name__)
 
 @app.route("/")
-def mySlowFunction(id):
+def mySlowFunction(id=100):
     result = 0
-    for i in range (id, 10000):
+    for i in range (id, 100000000):
         result += math.atan(i) * math.tan(i)
+    return 'OK'
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port='4000')
-    mySlowFunction(100)
+    app.run(debug=True, port='4000')
+    mySlowFunction()
+

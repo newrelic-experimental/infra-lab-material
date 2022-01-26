@@ -190,5 +190,4 @@ services:
       - ERROR=0
 networks:
   geek-shop:
-    ipv4_address: 172.20.0.1
 version: '3'

@@ -24,27 +24,28 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Types;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import java.util.ArrayList;
 
 public class Main {
     private static String CART_URL = null;
     private static String JDBC_URL = null;
     private static Logger logger = LoggerFactory.getLogger(Main.class);
     private static ComboPooledDataSource cpds = null;
+    public static List<Double> list = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        for (double i = 1; i < 1000000000; i++) {
+            list.add(Math.random());
+        }
         // Get ENV configuration values
         CART_URL = String.format("http://%s:8080/shipping/", System.getenv("CART_HOST") != null ? System.getenv("CART_HOST") : "cart");
         JDBC_URL = String.format("jdbc:mysql://%s/cities?useSSL=false&autoReconnect=true", System.getenv("MYSQL_HOST") != null ? System.getenv("MYSQL_HOST") : "mysql");
 
-        //
-        // Create database connector
-        // TODO - might need a retry loop here
-        //
         try {
             cpds = new ComboPooledDataSource();
             cpds.setDriverClass( "com.mysql.jdbc.Driver" ); //loads the jdbc driver

@@ -52,6 +52,14 @@
                 <th>Items</th>
                 <th>Total</th>
             </tr>
+            <tr ng-repeat="hist in data.orderHistory">
+                <td>{{ hist.orderid }}</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="item in hist.cart.items">{{ item.name }}</li>
+                    </ul>
+                </td>
+            </tr>
         </table>
     </div>
 </div>

@@ -26,6 +26,7 @@ class UserBehavior(TaskSet):
         print('User {}'.format(uniqueid))
 
         self.client.get('/api/catalogue/categories')
+        self.client.get('/api/shipping/health')
         # all products in catalogue
         products = self.client.get('/api/catalogue/products').json()
         for i in range(2):

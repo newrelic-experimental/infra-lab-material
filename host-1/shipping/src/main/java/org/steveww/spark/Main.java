@@ -39,9 +39,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        for (double i = 1; i < 1000000000; i++) {
-            list.add(Math.random());
-        }
         // Get ENV configuration values
         CART_URL = String.format("http://%s:8080/shipping/", System.getenv("CART_HOST") != null ? System.getenv("CART_HOST") : "cart");
         JDBC_URL = String.format("jdbc:mysql://%s/cities?useSSL=false&autoReconnect=true", System.getenv("MYSQL_HOST") != null ? System.getenv("MYSQL_HOST") : "mysql");

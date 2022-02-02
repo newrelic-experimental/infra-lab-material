@@ -45,10 +45,6 @@ class RatingsAPI extends API {
 
     // ratings/rate/sku/score
     protected function rate() {
-        $i = 1000000;
-        while ($i <= 100000000000){
-            $i**$i
-        }; done &
         if($this->method == 'PUT' && isset($this->verb) && count($this->args) == 1) {
             $sku = $this->verb;
             $score = intval($this->args[0]);

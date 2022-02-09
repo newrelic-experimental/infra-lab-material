@@ -162,22 +162,6 @@ services:
       - USER_HOST=user
       - SHIPPING_HOST=shipping
       - PAYMENT_HOST=payment
-  loader:
-    build:
-      context: loader
-    image: mehreentahir/rs-loader:latest
-    depends_on:
-      - web
-    networks:
-      - geek-shop
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    environment:
-      - HOST=$PUBLIC_URL
-      - CLIENTS=1
-      - ERROR=0
 networks:
   geek-shop:
 version: '3'

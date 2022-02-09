@@ -8,9 +8,6 @@
         var data = {
             uniqueid: '',
             user: {},
-            cart: {
-                total: 0
-            }
         };
 
         return data;
@@ -35,6 +32,60 @@
             $templateCache.removeAll();
         });
     });
+
+    robotshop.controller('productform', function($scope, $http, $routeParams, $timeout, currentUser) {
+
+        newrelic.addPageAction('productForm', { user_id: currentUser.uniqueid});
+        $scope.data = {};
+        $scope.data.message = ' ';
+        $scope.data.product = {};
+        $scope.data.rating = {};
+        $scope.data.rating.avg_rating = 0;
+        $scope.data.quantity = 1;
+
+        $scope.rateProduct = function(score) {
+            console.log('rate product', $scope.data.product.sku, score);
+            var url = '/api/ratings/api/rate/' + $scope.data.product.sku + '/' + score;
+            $http({
+                url: url,
+                method: 'PUT'
+            }).then((res) => {
+                $scope.data.message = 'Thankyou for your feedback';
+                $timeout(clearMessage, 3000);
+                loadRating($scope.data.product.sku);
+            }).catch((e) => {
+                console.log('ERROR', e);
+            });
+        };
+        
+        $scope.glowstan = function(vote, val) {
+            console.log('glowstan', vote);
+            var idx = vote;
+            while(idx > 0) {
+                document.getElementById('vote-' + idx).style.opacity = val;
+                idx--;
+            }
+        };
+
+        function loadRating(sku) {
+            $http({
+                url: '/api/ratings/api/fetch/' + sku,
+                method: 'GET'
+            }).then((res) => {
+                $scope.data.rating = res.data;
+            }).catch((e) => {
+                console.log('ERROR', e);
+            });
+        }
+
+        function clearMessage() {
+            console.log('clear message');
+            $scope.data.message = ' ';
+        }
+        
+        loadRating($routeParams.sku);
+    });
+
 
     robotshop.controller('shopform', function($scope, $http, $location, currentUser) {
 
@@ -71,11 +122,15 @@
                 $scope.data.uniqueid = currentUser.uniqueid;
             }
         });
+    });
 
-        function clearMessage() {
-            $scope.data.message = ' ';
-        }
-        
+    robotshop.controller('searchform', function($scope, $http, $routeParams) {
+
+        newrelic.addPageAction('searchForm',{});
+        $scope.data = {};
+        $scope.data.searchResults = [];
+        var text = $routeParams.text;
+        search(text);
     });
 
     robotshop.controller('loginform', function($scope, $http, currentUser) {

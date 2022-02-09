@@ -169,6 +169,13 @@ table.credentials {
     text-align: right;
 }
 
+/* payment */
+a.cont:visited {
+    color: lightseagreen;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 a.cont:link {
     color: lightseagreen;
     text-decoration: none;

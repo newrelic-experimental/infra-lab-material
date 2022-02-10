@@ -1,10 +1,18 @@
 services:
-  loader:
+  loader-1:
     build:
       context: loader-host-1
     image: mehreentahir/rs-loader:latest
     environment:
-      - HOST=http://10.132.0.96:8888
+      - HOST=http://10.132.0.26:8888
+      - CLIENTS=1
+      - ERROR=0
+  loader-2:
+    build:
+      context: loader-host-2
+    image: mehreentahir/rs-loader:latest
+    environment:
+      - HOST=http://10.132.0.38:8888
       - CLIENTS=1
       - ERROR=0
 version: '3'

@@ -13,7 +13,6 @@ class UserBehavior(TaskSet):
                 'password': 'password'
                 }
         res = self.client.post('/api/user/login', json=credentials)
-        print('login {}'.format(res.status_code))
 
 
     @task
@@ -21,9 +20,8 @@ class UserBehavior(TaskSet):
         self.client.get('/')
         user = self.client.get('/api/user/uniqueid').json()
         uniqueid = user.get('uuid', 'not found')
-        print('User {}'.format(uniqueid))
 
-            # vote for item
+        # vote for item
         if randint(1, 10) <= 3:
             self.client.put('/api/ratings/api/rate/{}/{}'.format(['sku'], randint(1, 5)))
 

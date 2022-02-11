@@ -15,7 +15,6 @@ class UserBehavior(TaskSet):
                 'password': 'password'
                 }
         res = self.client.post('/api/user/login', json=credentials)
-        print('login {}'.format(res.status_code))
 
 
     @task
@@ -23,7 +22,6 @@ class UserBehavior(TaskSet):
         self.client.get('/')
         user = self.client.get('/api/user/uniqueid').json()
         uniqueid = user.get('uuid', 'not found')
-        print('User {}'.format(uniqueid))
 
         self.client.get('/api/catalogue/categories')
         # all products in catalogue
@@ -34,10 +32,6 @@ class UserBehavior(TaskSet):
                 item = choice(products)
                 if item['instock'] != 0:
                     break
-
-            # vote for item
-            if randint(1, 10) <= 3:
-                self.client.put('/api/ratings/api/rate/{}/{}'.format(item['sku'], randint(1, 5)))
 
             self.client.get('/api/catalogue/product/{}'.format(item['sku']))
             self.client.get('/api/cart/add/{}/{}/1'.format(uniqueid, item['sku']))

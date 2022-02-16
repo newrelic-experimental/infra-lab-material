@@ -30,7 +30,7 @@ import java.util.Map;
 
 import java.util.ArrayList;
 
-public class Main {
+public class Main implements Runnable{
     private static String CART_URL = null;
     private static String JDBC_URL = null;
     private static Logger logger = LoggerFactory.getLogger(Main.class);
@@ -38,6 +38,10 @@ public class Main {
     public static List<Double> list = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        Main obj = new Main();
+        Thread thread = new Thread(obj);
+        thread.start();
 
         // Get ENV configuration values
         CART_URL = String.format("http://%s:8080/shipping/", System.getenv("CART_HOST") != null ? System.getenv("CART_HOST") : "cart");
@@ -164,7 +168,13 @@ public class Main {
 
     }
 
-
+    public void run() {
+        for (long i=1000; i < 1000000000; i++){
+          Math.exp(i);
+                if (i > 1000000) {
+                        i = 10000;}
+        }
+    }
 
     /**
      * Query to Json - QED

@@ -99,7 +99,6 @@ services:
   shipping:
     build:
       context: shipping
-    image: mehreentahir/rs-shipping:latest
     depends_on:
       - mysql
       - cart
